@@ -7,15 +7,11 @@ const refs = {
   fields: document.querySelectorAll('.field'),
   dateTimePicker: document.querySelector('input[type="text"]'),
   startBtn: document.querySelector('button[data-start]'),
-  daysValue: document.querySelector('span[data-days]').textContent,
-  hoursValue: document.querySelector('span[data-hours]').textContent,
-  minutesValue: document.querySelector('span[data-minutes]').textContent,
-  secondsValue: document.querySelector('span[data-seconds]').textContent,
+  days: document.querySelector('span[data-days]'),
+  hours: document.querySelector('span[data-hours]'),
+  minutes: document.querySelector('span[data-minutes]'),
+  seconds: document.querySelector('span[data-seconds]'),
 };
-console.log(refs.daysValue);
-console.log(refs.hoursValue);
-console.log(refs.minutesValue);
-console.log(refs.secondsValue);
 refs.startBtn.setAttribute('disabled', true);
 
 const options = {
@@ -38,17 +34,12 @@ flatpickr('input#datetime-picker', options);
 
 let dateTime = refs.dateTimePicker._flatpickr.selectedDates[0].getTime();
 
-console.log(convertMs(dateTime));
+refs.days.textContent = convertMs(dateTime).days;
+refs.hours.textContent = convertMs(dateTime).hours;
+refs.minutes.textContent = convertMs(dateTime).minutes;
+refs.seconds.textContent = convertMs(dateTime).seconds;
 
-refs.daysValue = convertMs(dateTime).days;
-refs.hoursValue = convertMs(dateTime).hours;
-refs.minutesValue = convertMs(dateTime).minutes;
-refs.secondsValue = convertMs(dateTime).seconds;
-
-console.log(refs.daysValue);
-console.log(refs.hoursValue);
-console.log(refs.minutesValue);
-console.log(refs.secondsValue);
+function addLeadingZero(value) {}
 
 // ----------TIME CONVERT------------
 function convertMs(ms) {
@@ -79,14 +70,13 @@ const timerStyles = refs.timer.style;
 timerStyles.gap = '10px';
 timerStyles.display = 'flex';
 timerStyles.marginTop = '20px';
+timerStyles.textAlign = 'center';
+timerStyles.fontWeight = '500';
 refs.fields.forEach(field => {
   const valueStyles = field.firstElementChild.style;
   const labelStyles = field.lastElementChild.style;
   valueStyles.fontSize = '30px';
-  valueStyles.fontWeight = '500';
   valueStyles.display = 'block';
-  valueStyles.textAlign = 'center';
   labelStyles.fontSize = '12px';
-  labelStyles.fontWeight = '500';
   labelStyles.textTransform = 'uppercase';
 });
