@@ -4,16 +4,18 @@ const refs = {
 };
 
 // ----------STYLES-------------
-refs.timer.style.display = 'flex';
-refs.timer.style.gap = '10px';
-refs.timer.style.marginTop = '20px';
+const timerStyles = refs.timer.style;
+timerStyles.gap = '10px';
+timerStyles.display = 'flex';
+timerStyles.marginTop = '20px';
 refs.fields.forEach(field => {
-  const value = field.querySelector('.value');
-  const label = field.querySelector('.label');
-  value.style.fontSize = '30px';
-  value.style.fontWeight = '500';
-  value.style.display = 'block';
-  value.style.textAlign = 'center';
-  label.style.fontSize = '15px';
-  label.style.textTransform = 'uppercase';
+  console.log(field.firstElementChild.style);
+  const valueStyles = field.firstElementChild.style;
+  const labelStyles = field.lastElementChild.style;
+  valueStyles.fontSize = '30px';
+  valueStyles.fontWeight = '500';
+  valueStyles.display = 'block';
+  valueStyles.textAlign = 'center';
+  labelStyles.fontSize = '15px';
+  labelStyles.textTransform = 'uppercase';
 });
