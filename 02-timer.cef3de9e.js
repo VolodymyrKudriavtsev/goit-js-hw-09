@@ -1,0 +1,2 @@
+const e={timer:document.querySelector(".timer"),fields:document.querySelectorAll(".field")};e.timer.style.display="flex",e.timer.style.gap="10px",e.timer.style.marginTop="20px",e.fields.forEach((e=>{const t=e.querySelector(".value"),l=e.querySelector(".label");t.style.fontSize="30px",t.style.fontWeight="500",t.style.display="block",t.style.textAlign="center",l.style.fontSize="15px",l.style.textTransform="uppercase"}));
+//# sourceMappingURL=02-timer.cef3de9e.js.map
