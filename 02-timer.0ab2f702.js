@@ -1,2 +1,0 @@
-const e={timer:document.querySelector(".timer"),fields:document.querySelectorAll(".field")},t=e.timer.style;t.gap="10px",t.display="flex",t.marginTop="20px",e.fields.forEach((e=>{console.log(e.firstElementChild.style);const t=e.firstElementChild.style,l=e.lastElementChild.style;t.fontSize="30px",t.fontWeight="500",t.display="block",t.textAlign="center",l.fontSize="15px",l.textTransform="uppercase"}));
-//# sourceMappingURL=02-timer.0ab2f702.js.map
