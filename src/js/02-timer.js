@@ -26,8 +26,10 @@ const options = {
 };
 flatpickr('input#datetime-picker', options);
 
-// !const timerStart = () => {};
-// !const timerStop = () => {};
+//! const timerStart = () => {};
+//! const timerStop = () => {};
+
+const timer = {};
 
 const currentDateTime = Date.now();
 
@@ -112,9 +114,9 @@ fields.forEach(field => {
   labelStyles.textTransform = 'uppercase';
 });
 
-// setInterval(() => {
-//   let selectedTime = refs.dateTimePicker._flatpickr.selectedDates[0].getTime();
-//   const curTime = Date.now();
-//   const difTime = selectedTime - curTime;
-//   console.log(convertMs(difTime));
-// }, 1000);
+//! setInterval(() => {
+//!   let selectedTime = refs.dateTimePicker._flatpickr.selectedDates[0].getTime();
+//!   const curTime = Date.now();
+//!   const difTime = selectedTime - curTime;
+//!   console.log(convertMs(difTime));
+//! }, 1000);
