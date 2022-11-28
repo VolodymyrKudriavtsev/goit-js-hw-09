@@ -55,7 +55,7 @@ const onStartBtnClick = () => {
     refs.seconds.textContent = convertMs(differenceDateTime).seconds;
   }, 1000);
 
-  // ??? ------------Как остановить таймер???-----------------
+  // !!!------------Как остановить таймер???-----------------
   // if (differenceDateTime === 0) {
   //   clearInterval(intervalID);
   // }
