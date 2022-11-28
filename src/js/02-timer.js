@@ -7,10 +7,9 @@ const refs = {
   startBtn: document.querySelector('button[data-start]'),
   valueSpans: document.querySelectorAll('.value'),
 };
-
-// console.log(refs.valueSpans[0])
-
-refs.startBtn.setAttribute('disabled', true);
+// refs.startBtn.setAttribute('disabled', true);
+console.log(refs.startBtn);
+let timerId = null;
 
 const options = {
   enableTime: true,
@@ -18,7 +17,7 @@ const options = {
   defaultDate: new Date(),
   minuteIncrement: 1,
   onClose(selectedDates) {
-    if (selectedDates[0] <= options.defaultDate) {
+    if (selectedDates[0] <= Date.now()) {
       return Notify.failure('Please choose a date in the future');
     }
 
@@ -26,6 +25,9 @@ const options = {
   },
 };
 flatpickr('input#datetime-picker', options);
+
+// !const timerStart = () => {};
+// !const timerStop = () => {};
 
 const currentDateTime = Date.now();
 
@@ -36,29 +38,34 @@ const getDifference = () => {
   return selectedDateTime - currentDateTime;
 };
 
-
-
 const onStartBtnClick = () => {
   refs.startBtn.setAttribute('disabled', true);
   refs.dateTimePicker.setAttribute('disabled', true);
 
   let differenceDateTime = getDifference();
-  console.log(currentDateTime);
 
   timerId = setInterval(() => {
+    const { days, hours, minutes, seconds } = convertMs(differenceDateTime);
     differenceDateTime -= 1000;
 
-    refs.valueSpans[0].textContent = convertMs(differenceDateTime).days;
-    refs.valueSpans[1].textContent = convertMs(differenceDateTime).hours;
-    refs.valueSpans[2].textContent = convertMs(differenceDateTime).minutes;
-    refs.valueSpans[3].textContent = convertMs(differenceDateTime).seconds;
+    refs.valueSpans[0].textContent = days;
+    refs.valueSpans[1].textContent = hours;
+    refs.valueSpans[2].textContent = minutes;
+    refs.valueSpans[3].textContent = seconds;
   }, 1000);
 
   // !!!------------Как остановить таймер???-----------------
-  if (differenceDateTime === currentDateTime) {
-    clearInterval(timerId);
-  }
 };
+// function name(id) {
+//   if (
+//     refs.valueSpans[0].textContent === '00' &&
+//     refs.valueSpans[1].textContent === '00' &&
+//     refs.valueSpans[2].textContent === '00' &&
+//     refs.valueSpans[3].textContent === '00'
+//   ) {
+//     clearInterval(id);
+//   }
+// }
 
 refs.startBtn.addEventListener('click', onStartBtnClick);
 
@@ -105,10 +112,9 @@ fields.forEach(field => {
   labelStyles.textTransform = 'uppercase';
 });
 
-console.log(refs.valueSpans)
-
-refs.valueSpans.forEach(value => {
-  if(value.textContent === "00") {
-    console.log('Hello!');
-  }
-})
+// setInterval(() => {
+//   let selectedTime = refs.dateTimePicker._flatpickr.selectedDates[0].getTime();
+//   const curTime = Date.now();
+//   const difTime = selectedTime - curTime;
+//   console.log(convertMs(difTime));
+// }, 1000);
