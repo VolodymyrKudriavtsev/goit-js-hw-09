@@ -5,11 +5,11 @@ import { Notify } from 'notiflix/build/notiflix-notify-aio';
 const refs = {
   dateTimePicker: document.querySelector('input[type="text"]'),
   startBtn: document.querySelector('button[data-start]'),
-  days: document.querySelector('span[data-days]'),
-  hours: document.querySelector('span[data-hours]'),
-  minutes: document.querySelector('span[data-minutes]'),
-  seconds: document.querySelector('span[data-seconds]'),
+  valueSpans: document.querySelectorAll('.value'),
 };
+
+// console.log(refs.valueSpans[0])
+
 refs.startBtn.setAttribute('disabled', true);
 
 const options = {
@@ -27,43 +27,46 @@ const options = {
 };
 flatpickr('input#datetime-picker', options);
 
-const getDifference = () => {
-  const currentDateTime = Date.now();
+const currentDateTime = Date.now();
 
+const getDifference = () => {
   const selectedDateTime =
     refs.dateTimePicker._flatpickr.selectedDates[0].getTime();
 
   return selectedDateTime - currentDateTime;
 };
 
-const addLeadingZero = value => {
-  return String(value).padStart(2, '0');
-};
+
 
 const onStartBtnClick = () => {
   refs.startBtn.setAttribute('disabled', true);
   refs.dateTimePicker.setAttribute('disabled', true);
 
   let differenceDateTime = getDifference();
+  console.log(currentDateTime);
 
-  intervalID = setInterval(() => {
+  timerId = setInterval(() => {
     differenceDateTime -= 1000;
 
-    refs.days.textContent = convertMs(differenceDateTime).days;
-    refs.hours.textContent = convertMs(differenceDateTime).hours;
-    refs.minutes.textContent = convertMs(differenceDateTime).minutes;
-    refs.seconds.textContent = convertMs(differenceDateTime).seconds;
+    refs.valueSpans[0].textContent = convertMs(differenceDateTime).days;
+    refs.valueSpans[1].textContent = convertMs(differenceDateTime).hours;
+    refs.valueSpans[2].textContent = convertMs(differenceDateTime).minutes;
+    refs.valueSpans[3].textContent = convertMs(differenceDateTime).seconds;
   }, 1000);
 
   // !!!------------Как остановить таймер???-----------------
-  // if (differenceDateTime === 0) {
-  //   clearInterval(intervalID);
-  // }
+  if (differenceDateTime === currentDateTime) {
+    clearInterval(timerId);
+  }
 };
 
 refs.startBtn.addEventListener('click', onStartBtnClick);
 
 // ----------TIME CONVERT------------
+const addLeadingZero = value => {
+  return String(value).padStart(2, '0');
+};
+
 function convertMs(ms) {
   // Number of milliseconds per unit of time
   const second = 1000;
@@ -101,3 +104,11 @@ fields.forEach(field => {
   labelStyles.fontSize = '12px';
   labelStyles.textTransform = 'uppercase';
 });
+
+console.log(refs.valueSpans)
+
+refs.valueSpans.forEach(value => {
+  if(value.textContent === "00") {
+    console.log('Hello!');
+  }
+})
