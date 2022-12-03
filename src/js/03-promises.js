@@ -5,14 +5,16 @@ function createPromise(position, delay) {
     setTimeout(() => {
       if (shouldResolve) {
         resolve({ position, delay });
+        console.log(Date.now());
+      } else {
+        reject({ position, delay });
+        console.log(Date.now());
       }
-
-      reject({ position, delay });
-    }, delay);
+    }, 0);
   });
 }
 
-createPromise(2, 1500).then(onSuccess).catch(onError);
+// createPromise(2, 1500).then(onSuccess).catch(onError);
 
 function onSuccess({ position, delay }) {
   console.log(`✅ Fulfilled promise ${position} in ${delay}ms`);
@@ -22,12 +24,23 @@ function onError({ position, delay }) {
   console.log(`❌ Rejected promise ${position} in ${delay}ms`);
 }
 
-// createPromise(2, 1500)
-//   .then(({ position, delay }) => {
-//     console.log(`✅ Fulfilled promise ${position} in ${delay}ms`);
-//   })
-//   .catch(({ position, delay }) => {
-//     console.log(`❌ Rejected promise ${position} in ${delay}ms`);
-//   });
+let DELAY = 2000;
+let STEP = 1000;
+let COUNTER = 0;
+let AMOUNT = 3;
+let POSITION = 0;
 
-//! position, delay
+console.log('START  INTERVAL !!! - ' + Date.now());
+
+const intervalId = setInterval(() => {
+  COUNTER += 1;
+  POSITION += 1;
+  DELAY += STEP;
+
+  createPromise(POSITION, DELAY).then(onSuccess).catch(onError);
+
+  if (COUNTER === AMOUNT) {
+    clearInterval(intervalId);
+    return;
+  }
+}, STEP);
