@@ -10,7 +10,7 @@ function createPromise(position, delay) {
         reject({ position, delay });
         console.log(Date.now());
       }
-    }, 0);
+    }, delay);
   });
 }
 
@@ -35,9 +35,9 @@ console.log('START  INTERVAL !!! - ' + Date.now());
 const intervalId = setInterval(() => {
   COUNTER += 1;
   POSITION += 1;
-  DELAY += STEP;
 
   createPromise(POSITION, DELAY).then(onSuccess).catch(onError);
+  DELAY += STEP;
 
   if (COUNTER === AMOUNT) {
     clearInterval(intervalId);
