@@ -1,0 +1,2 @@
+function e(e,n){const o=Math.random()>.3;return new Promise(((t,i)=>{setTimeout((()=>{o?t({position:e,delay:n}):i({position:e,delay:n})}),n)}))}function n({position:e,delay:n}){console.log(`✅ Fulfilled promise ${e} in ${n}ms - `+Date.now())}function o({position:e,delay:n}){console.log(`❌ Rejected promise ${e} in ${n}ms - `+Date.now())}!function(t,i){console.log(Date.now()),e(2,2e3).then(n).catch(o);let l=1;intervalId=setInterval((()=>{l+=1,e(2,2e3).then(n).catch(o),l!==i||clearInterval(intervalId)}),t)}(1e3,3);
+//# sourceMappingURL=03-promises.895ee12c.js.map
