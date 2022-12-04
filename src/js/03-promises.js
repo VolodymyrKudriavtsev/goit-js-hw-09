@@ -5,10 +5,8 @@ function createPromise(position, delay) {
     setTimeout(() => {
       if (shouldResolve) {
         resolve({ position, delay });
-        console.log(Date.now());
       } else {
         reject({ position, delay });
-        console.log(Date.now());
       }
     }, delay);
   });
@@ -17,30 +15,62 @@ function createPromise(position, delay) {
 // createPromise(2, 1500).then(onSuccess).catch(onError);
 
 function onSuccess({ position, delay }) {
-  console.log(`✅ Fulfilled promise ${position} in ${delay}ms`);
+  console.log(`✅ Fulfilled promise ${position} in ${delay}ms - ` + Date.now());
 }
 
 function onError({ position, delay }) {
-  console.log(`❌ Rejected promise ${position} in ${delay}ms`);
+  console.log(`❌ Rejected promise ${position} in ${delay}ms - ` + Date.now());
 }
 
-let DELAY = 2000;
-let STEP = 1000;
-let COUNTER = 0;
-let AMOUNT = 3;
-let POSITION = 0;
+// let POSITION = 0;
 
-console.log('START  INTERVAL !!! - ' + Date.now());
+// function experiment(DELAY, STEP, AMOUNT) {
+//   console.log(Date.now());
+//   // STEP = 0;
+//   setTimeout(() => {
+//     // STEP = STEP;
+//     intervalId = setInterval(() => {
+//       const shouldResolve = Math.random() > 0.3;
+//       COUNTER += 1;
+//       POSITION += 1;
+//       // DELAY += STEP;
 
-const intervalId = setInterval(() => {
-  COUNTER += 1;
-  POSITION += 1;
+//       if (shouldResolve) {
+//         console.log(
+//           `✅ Fulfilled promise ${POSITION} in ${(DELAY += STEP)}ms - ` +
+//             Date.now()
+//         );
+//       } else {
+//         console.log(
+//           `❌ Rejected promise ${POSITION} in ${(DELAY += STEP)}ms - ` +
+//             Date.now()
+//         );
+//       }
 
-  createPromise(POSITION, DELAY).then(onSuccess).catch(onError);
-  DELAY += STEP;
+//       if (COUNTER === AMOUNT) {
+//         clearInterval(intervalId);
+//         return;
+//       }
+//     }, STEP);
+//   }, DELAY);
+// }
 
-  if (COUNTER === AMOUNT) {
-    clearInterval(intervalId);
-    return;
-  }
-}, STEP);
+// experiment(2000, 1000, 5)
+
+function experiment_1_ON_SUBMIT(STEP, AMOUNT) {
+  console.log(Date.now());
+  createPromise(2, 2000).then(onSuccess).catch(onError);
+  let COUNTER = 1;
+
+  intervalId = setInterval(() => {
+    COUNTER += 1;
+
+    createPromise(2, 2000).then(onSuccess).catch(onError);
+    if (COUNTER === AMOUNT) {
+      clearInterval(intervalId);
+      return;
+    }
+  }, STEP);
+}
+
+experiment_1_ON_SUBMIT(1000, 3);
