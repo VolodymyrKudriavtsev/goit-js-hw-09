@@ -1,3 +1,7 @@
+import { Notify } from 'notiflix/build/notiflix-notify-aio';
+
+const form = document.querySelector('.form');
+
 function createPromise(position, delay) {
   const shouldResolve = Math.random() > 0.3;
 
@@ -12,65 +16,33 @@ function createPromise(position, delay) {
   });
 }
 
-// createPromise(2, 1500).then(onSuccess).catch(onError);
-
 function onSuccess({ position, delay }) {
-  console.log(`✅ Fulfilled promise ${position} in ${delay}ms - ` + Date.now());
+  Notify.success(`✅ Fulfilled promise ${position} in ${delay}ms`, {
+    useIcon: false,
+  });
 }
 
 function onError({ position, delay }) {
-  console.log(`❌ Rejected promise ${position} in ${delay}ms - ` + Date.now());
+  Notify.failure(`❌ Rejected promise ${position} in ${delay}ms`, {
+    useIcon: false,
+  });
 }
 
-// let POSITION = 0;
-
-// function experiment(DELAY, STEP, AMOUNT) {
-//   console.log(Date.now());
-//   // STEP = 0;
-//   setTimeout(() => {
-//     // STEP = STEP;
-//     intervalId = setInterval(() => {
-//       const shouldResolve = Math.random() > 0.3;
-//       COUNTER += 1;
-//       POSITION += 1;
-//       // DELAY += STEP;
-
-//       if (shouldResolve) {
-//         console.log(
-//           `✅ Fulfilled promise ${POSITION} in ${(DELAY += STEP)}ms - ` +
-//             Date.now()
-//         );
-//       } else {
-//         console.log(
-//           `❌ Rejected promise ${POSITION} in ${(DELAY += STEP)}ms - ` +
-//             Date.now()
-//         );
-//       }
-
-//       if (COUNTER === AMOUNT) {
-//         clearInterval(intervalId);
-//         return;
-//       }
-//     }, STEP);
-//   }, DELAY);
-// }
-
-// experiment(2000, 1000, 5)
-
-function experiment_1_ON_SUBMIT(STEP, AMOUNT) {
+function onFormSubmit(e) {
   console.log(Date.now());
-  createPromise(2, 2000).then(onSuccess).catch(onError);
-  let COUNTER = 1;
 
-  intervalId = setInterval(() => {
-    COUNTER += 1;
+  e.preventDefault();
 
-    createPromise(2, 2000).then(onSuccess).catch(onError);
-    if (COUNTER === AMOUNT) {
-      clearInterval(intervalId);
-      return;
-    }
-  }, STEP);
+  let position = 0;
+  let step = Number(form.elements.step.value);
+  let delay = Number(form.elements.delay.value);
+  const amount = Number(form.elements.amount.value);
+
+  for (let i = 1; i <= amount; i += 1) {
+    position += 1;
+    createPromise(position, delay).then(onSuccess).catch(onError);
+    delay += step;
+  }
 }
 
-experiment_1_ON_SUBMIT(1000, 3);
+form.addEventListener('submit', onFormSubmit);
